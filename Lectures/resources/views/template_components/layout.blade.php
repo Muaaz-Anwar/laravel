@@ -6,3 +6,5 @@
 <footer>
     <a href="">Copyright by template</a>
 </footer>
+
+@stack('scripts')

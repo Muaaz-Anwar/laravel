@@ -12,6 +12,26 @@
 
 @section('content')
 <h1>Home template page</h1>
+@verbatim
+    <div id="app">{{ message }}</div> <br>
+@endverbatim
 @endsection
+
+@push('scripts')
+ <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+  const { createApp, ref } = Vue
+
+  createApp({
+    setup() {
+      const message = ref('Hello and welcome to vue!')
+      return {
+        message
+      }
+    }
+  }).mount('#app')
+</script>
+@endpush
 </body>
 </html>

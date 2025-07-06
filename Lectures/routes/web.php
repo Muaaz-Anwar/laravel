@@ -2,12 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// })->name('/home');
-// Route::get('/aboutssss', function () {
-//     return view('about');
-// })->name('about');
+Route::get('/', function () {
+    return view('welcome');
+})->name('/home');
+Route::get('/aboutssss', function () {
+    return view('about');
+})->name('about');
 Route::get('contact-us', function () {
     return view('contact');
 })->name('contact');
@@ -16,6 +16,9 @@ Route::get('/index/copy/blogssss', function () {
     return view('blog');
 })->name('blog');
 
+Route::get('js', function() {
+    return view('js_value.reading_js');
+});
 
 Route::get('/thome', function () {
     return view('template.home');

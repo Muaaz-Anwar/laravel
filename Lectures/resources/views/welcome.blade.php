@@ -11,9 +11,9 @@
 <body>
     {{-- $name = ["muaaz", "anwar", "Furqan", "akasha", "zain"]; --}}
     @php
-        $name = ["one wala 1" => "muaaz","two" => "anwar", "three" => "Furqan", "four" => "akasha", "five" => "zain"];
-        @endphp
-    @include('components.header' , $name)
+        $name = ['one wala 1' => 'muaaz', 'two' => 'anwar', 'three' => 'Furqan', 'four' => 'akasha', 'five' => 'zain'];
+    @endphp
+    @include('components.header', $name)
 
     <h1>Index page </h1>
 

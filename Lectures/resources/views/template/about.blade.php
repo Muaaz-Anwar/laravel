@@ -12,5 +12,17 @@
 @section('content')
 <h1>About template page</h1>
 @endsection
+
+@push('scripts')
+ <script>
+    alert("This is about page")
+ </script>
+@endpush
+
+@prepend('scripts')
+ <script>
+    alert("this will run just before the push script")
+ </script>
+@endprepend
 </body>
 </html>
