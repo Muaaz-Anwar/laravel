@@ -7,13 +7,15 @@
     <title>About Us</title>
 </head>
 <body>
-<a href="{{ route('/home') }}">Home</a>
-<a href="{{ route('contact') }}">Contact Us</a>
-<a href="{{ route('about') }}">About Us</a>
-<a href="{{ route('blog') }}">Blog</a>
+{{-- @include('components.header', ['name' => []]) --}}
+@includeWhen(true, 'components.header', ['name' => ['one' => 'this is when']])
+@includeUnless(true, 'components.header', ['name' => ['one' => 'this is unless']])
 
 <div>
     <h1>About us</h1>
 </div>
+
+@include('components.footer')
+
 </body>
 </html>

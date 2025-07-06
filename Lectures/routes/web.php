@@ -2,12 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('/home');
-Route::get('/aboutssss', function () {
-    return view('about');
-})->name('about');
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('/home');
+// Route::get('/aboutssss', function () {
+//     return view('about');
+// })->name('about');
 Route::get('contact-us', function () {
     return view('contact');
 })->name('contact');
@@ -15,6 +15,14 @@ Route::get('contact-us', function () {
 Route::get('/index/copy/blogssss', function () {
     return view('blog');
 })->name('blog');
+
+
+Route::get('/thome', function () {
+    return view('template.home');
+})->name('home');
+Route::get('/tabout', function () {
+    return view('template.about');
+})->name('about');
 
 Route::prefix('pages')->group(function(){
 

@@ -7,11 +7,10 @@
     <title>Navbar</title>
 </head>
 <body>
-<a href="{{ route('/home') }}">Home</a>
-<a href="{{ route('contact') }}">Contact Us</a>
-<a href="{{ route('about') }}">About Us</a>
-<a href="{{ route('blog') }}">Blog</a>
+@include('components.header', ['name' => []])
 
 <h1>Blog page </h1>
+
+@include('components.footer')
 </body>
 </html>

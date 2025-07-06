@@ -1,0 +1,3 @@
+<footer>
+ {{ "@copyrights reserved" }}
+</footer>
