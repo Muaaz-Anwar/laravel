@@ -4,10 +4,32 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+})->name('/home');
+Route::get('/aboutssss', function () {
+    return view('about');
+})->name('about');
+Route::get('contact-us', function () {
+    return view('contact');
+})->name('contact');
+
+Route::get('/index/copy/blogssss', function () {
+    return view('blog');
+})->name('blog');
+
+Route::prefix('pages')->group(function(){
+
+Route::get('user1', function () {
+    return view('pages.user_1');
+})->name('user_1');
+Route::get('user2', function () {
+    return view('pages.user_2');
+})->name('user_2');
+
 });
 
-Route::view('about' , '/about');
 
+// Route::view('about' , '/about');
+// Route::redirect('about', 'blog');
 
 // ID is required to access this file
 // Route::get('/user/{id}', function ($id) {
