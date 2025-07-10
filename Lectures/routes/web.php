@@ -36,6 +36,7 @@ Route::get('/aboutssss', function () {
 
 Route::get('viewusers/{id}', function ($id) {
     $users = getUsers();
+    abort_if(!isset($users[$id]), 404);
     $user = $users[$id];
     return view('viewusers', ['id' => $user]);
 })->name('view.user');
