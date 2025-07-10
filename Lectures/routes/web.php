@@ -1,13 +1,45 @@
 <?php
 
+use Hamcrest\Core\HasToString;
 use Illuminate\Support\Facades\Route;
+use Laravel\Pail\ValueObjects\Origin\Console;
+
+function getUsers()
+    {
+      return  [
+            '1' => ['name' => 'John', 'age' => 25],
+            '2' => ['name' => 'Sara', 'age' => 30],
+            '3' => ['name' => 'Ali', 'age' => 22],
+            '4' => ['name' => 'Emma', 'age' => 28],
+            '5' => ['name' => 'David', 'age' => 35]
+        ];
+    };
 
 Route::get('/', function () {
     return view('welcome');
 })->name('/home');
+
 Route::get('/aboutssss', function () {
-    return view('about');
+
+        $users = [
+        '1' => ['name' => 'John', 'age' => 25],
+        '2' => ['name' => 'Sara', 'age' => 30],
+        '3' => ['name' => 'Ali', 'age' => 22],
+        '4' => ['name' => 'Emma', 'age' => 28],
+        '5' => ['name' => 'David', 'age' => 35]
+    ];
+
+    // return view('about');
+    return view('about', ['user' => "Muaaz", "script" => "", 'users' => $users]);
+    // return view('about')->with('user', 'muaaz')->with('script', "ok");
 })->name('about');
+
+Route::get('viewusers/{id}', function ($id) {
+    $users = getUsers();
+    $user = $users[$id];
+    return view('viewusers', ['id' => $user]);
+})->name('view.user');
+
 Route::get('contact-us', function () {
     return view('contact');
 })->name('contact');
@@ -16,7 +48,7 @@ Route::get('/index/copy/blogssss', function () {
     return view('blog');
 })->name('blog');
 
-Route::get('js', function() {
+Route::get('js', function () {
     return view('js_value.reading_js');
 });
 
@@ -27,19 +59,18 @@ Route::get('/tabout', function () {
     return view('template.about');
 })->name('about');
 
-Route::prefix('pages')->group(function(){
+Route::prefix('pages')->group(function () {
 
-Route::get('user1', function () {
-    return view('pages.user_1');
-})->name('user_1');
-Route::get('user2', function () {
-    return view('pages.user_2');
-})->name('user_2');
-
+    Route::get('user1', function () {
+        return view('pages.user_1');
+    })->name('user_1');
+    Route::get('user2', function () {
+        return view('pages.user_2');
+    })->name('user_2');
 });
 
 
-// Route::view('about' , '/about');
+Route::view('route', 'routes', ['name' => ['one' => 'this is when']]);
 // Route::redirect('about', 'blog');
 
 // ID is required to access this file
@@ -64,5 +95,3 @@ Route::fallback(function () {
 
 // how to test routes with console, get all routes in terminal, get all routes that we created with --except-vendor
 // get specific route with --path=post
-
-
