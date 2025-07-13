@@ -15,16 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('student_id');
-            $table->foreign('student_id')->references('id')->on('student');
-            // other ways to add foreigh key =========================
-            // $table->foreignId('student_id')->constrained();
-            // $table->foreignId('stu_id')->constrained('student');
-            // $table->dropunique('email')
-            // $table->dropprimary('id')
-            // $table->dropforeigh(['user_id'])
-
-            // to update a table
-            // php artisan migrate:create_update_library_table --table=library
+            $table->foreign('student_id')->references('id')->on('students');
             $table->timestamps();
         });
     }
@@ -37,3 +28,14 @@ return new class extends Migration
         Schema::dropIfExists('library');
     }
 };
+
+
+// other ways to add foreigh key =========================
+            // $table->foreignId('student_id')->constrained();
+            // $table->foreignId('stu_id')->constrained('student');
+            // $table->dropunique('email')
+            // $table->dropprimary('id')
+            // $table->dropforeigh(['user_id'])
+
+            // to update a table
+            // php artisan migrate:create_update_library_table --table=library

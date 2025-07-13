@@ -13,9 +13,28 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        student::create([
-            "name"=> "Seeder user",
-            "email"=> "Seederemail@gmail.com",
-        ]);
+        // student::create([
+        //     "name"=> "Seeder user",
+        //     "email"=> "Seederemail@gmail.com",
+        // ]);
+
+        $student = collect([[
+            "name"=> "Seeder user 1",
+            "email"=> "1Seederemail@gmail.com"
+        ],[
+            "name"=> "Seeder user 2",
+            "email"=> "2Seederemail@gmail.com",
+        ],[
+            "name"=> "Seeder user 3",
+            "email"=> "3Seederemail@gmail.com",
+        ]]);
+
+        $student->each(function ($student) {
+            student::insert($student);
+        });
+        // student::create([
+        //     "name"=> "Seeder user",
+        //     "email"=> "Seederemail@gmail.com",
+        // ]);
     }
 }
