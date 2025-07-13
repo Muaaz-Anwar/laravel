@@ -1,8 +1,7 @@
 <?php
 
-use Hamcrest\Core\HasToString;
 use Illuminate\Support\Facades\Route;
-use Laravel\Pail\ValueObjects\Origin\Console;
+use App\Http\Controllers\PageController;
 
 function getUsers()
     {
@@ -93,6 +92,13 @@ Route::get('/user/{id?}/comment/{cid?}', function ($id = null, $cpara = null) {
 Route::fallback(function () {
     return view('error');
 });
+
+
+
+Route::controller(PageController::class)->group(function(){
+    Route::get('controller', 'index')->name('p_home');
+});
+
 
 // how to test routes with console, get all routes in terminal, get all routes that we created with --except-vendor
 // get specific route with --path=post

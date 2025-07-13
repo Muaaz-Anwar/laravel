@@ -22,7 +22,9 @@
     <br>
 
     {{ ' hello world' }}
-
+    @isset($id)
+     <h1>This is ID {{ $id }}</h1>
+    @endisset
     <br>
 
     {!! '<h1> Hello World </h1> <br> <h2>This is h2 </h2>' !!}
