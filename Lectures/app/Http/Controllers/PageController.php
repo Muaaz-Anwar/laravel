@@ -1,12 +1,38 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
     public function index(){
         return view('pages.index');
     }
+
+    public function show($id = null){
+    {
+        if ($id) {
+            $users = DB::table('students')->find($id);
+            return view('pages.index', ['users'=> $users]);
+            return $users;
+        } else {
+            $users = DB::table('students')
+            // ->where('id', $id)
+            // ->where([
+            // ['city', '=', ''goa],
+            // ['age', '>', '21']
+            // ])
+            // ->where('email', 'anuemail@gmail.com')
+            // ->distinct() Unique  Values
+            ->select( 'email')
+            ->get();
+        // return $users;
+        // dd($users);
+        // dump($users);
+        return view('pages.index', compact('users'));
+        }
+
+
+    }
+}
 }
