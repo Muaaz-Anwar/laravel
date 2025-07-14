@@ -12,9 +12,8 @@ class PageController extends Controller
     public function show($id = null){
     {
         if ($id) {
-            $users = DB::table('students')->find($id);
-            return view('pages.index', ['users'=> $users]);
-            return $users;
+            $user = DB::table('students')->find($id);
+            return view('pages.index', ['user'=> $user, 'users'=> null]);
         } else {
             $users = DB::table('students')
             // ->where('id', $id)
@@ -24,12 +23,12 @@ class PageController extends Controller
             // ])
             // ->where('email', 'anuemail@gmail.com')
             // ->distinct() Unique  Values
-            ->select( 'email')
+            // ->select( 'email')
             ->get();
         // return $users;
         // dd($users);
         // dump($users);
-        return view('pages.index', compact('users'));
+        return view('pages.index', ['users'=> $users, 'user'=> null] );
         }
 
 
