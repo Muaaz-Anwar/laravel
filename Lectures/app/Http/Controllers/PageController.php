@@ -21,6 +21,8 @@ class PageController extends Controller
             // ['city', '=', ''goa],
             // ['age', '>', '21']
             // ])
+            // ->wherebetween('id', [3,6])
+            // ->orwherenotbetween('id', [3,6])
             // ->where('email', 'anuemail@gmail.com')
             // ->distinct() Unique  Values
             // ->select( 'email')
