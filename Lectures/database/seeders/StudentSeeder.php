@@ -46,7 +46,8 @@ class StudentSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             student::create([
                 "name" => fake()->name(),
-                "email" => fake()->unique()->email()
+                "email" => fake()->unique()->email(),
+                'city' => fake()->numberBetween(1,10),
             ]);
         }
     }

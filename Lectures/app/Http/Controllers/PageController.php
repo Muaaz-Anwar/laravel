@@ -13,13 +13,17 @@ class PageController extends Controller
     }
 
     public function show($id = null)
-    {
-        {
+    { {
             if ($id) {
-                $user = DB::table('students')->find($id);
+                $user = DB::table('students')
+                ->join('cities', 'students.city', '=', 'cities.id')->select('students.*', 'cities.name as city_name')
+                ->select('students.*', 'cities.city_name as city_name')
+                ->first();
                 return view('pages.index', ['user' => $user, 'value' => 1]);
             } else {
-                $users = DB::table('students')->paginate(5);
+                $users = DB::table('students')
+                ->join('cities', 'students.city', '=', 'cities.id')
+                ->paginate(10);
                 return view('pages.index', ['users' => $users, 'value' => 0]);
                 // ->paginate(5)->append(['sort' => 'votes', 'test'=> 'ac'])->fragment('users')
                 // ->min('age')->max('price')
@@ -50,9 +54,9 @@ class PageController extends Controller
                 // dump($users);
             }
         }
-
     }
-    public function add(Request $request){
+    public function add(Request $request)
+    {
         //     $user = DB::table('students')->upsert([
         //         'name'=> "Toweer ahmad",
         //         'email'=> 'toqeer007@gmail.com',
@@ -61,16 +65,16 @@ class PageController extends Controller
         //     ],['email'],['name']
         // );
         $user = DB::table('students')->insert([
-            'name'=> $request->name,
-            'email'=> $request->email,
+            'name' => $request->name,
+            'email' => $request->email,
             'created_at' => Now(),
             'updated_at' => Now(),
         ]);
-            if ($user) {
-                return redirect()->route('add_student')->with('success','Data Added');
-            }else {
-                echo "<h1>Data not added</h1>";
-            }
+        if ($user) {
+            return redirect()->route('add_student')->with('success', 'Data Added');
+        } else {
+            echo "<h1>Data not added</h1>";
+        }
         // $user = DB::table('students')->insertOrIgnore([
         //     [
         //     'name'=> "ali asghar",
@@ -93,36 +97,39 @@ class PageController extends Controller
         // ]);
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $user = DB::table("students")
-        ->where("id", $request->id)
-        //insert or update //
-        // ->increment('age', 5)->decrement('price', 500, ['email', 'anyemail@gmail.com'])
-        // ->incrementeach([
-        // 'age' => 5,
-        // 'other_int_field' => 5,
-        // ]);
-        ->update([
-            "name"=> $request->name,
-            'email'=> $request->email,
-        ]);
+            ->where("id", $request->id)
+            //insert or update //
+            // ->increment('age', 5)->decrement('price', 500, ['email', 'anyemail@gmail.com'])
+            // ->incrementeach([
+            // 'age' => 5,
+            // 'other_int_field' => 5,
+            // ]);
+            ->update([
+                "name" => $request->name,
+                'email' => $request->email,
+            ]);
         if ($user) {
-            return redirect()->route('view_student')->with('success','Data Added Successfully');
-        }else{
+            return redirect()->route('view_student')->with('success', 'Data Added Successfully');
+        } else {
             echo "<h1>Data Not</h1>";
         }
     }
-    public function delete($id){
+    public function delete($id)
+    {
         $user = DB::table("students");
         $user->where("id", $id)->delete();
         if ($user) {
             return redirect("controller");
-        }else{
+        } else {
             echo "<h1>Data Not Deleted</h1>";
         }
     }
-    public function edit($id){
+    public function edit($id)
+    {
         $user = DB::table("students")->where("id", $id)->get();
-        return view("pages.edit", ["user"=> $user[0]]);
+        return view("pages.edit", ["user" => $user[0]]);
     }
 }
