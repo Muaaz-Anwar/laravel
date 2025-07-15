@@ -19,9 +19,9 @@ class PageController extends Controller
                 $user = DB::table('students')->find($id);
                 return view('pages.index', ['user' => $user, 'value' => 1]);
             } else {
-                $users = DB::table('students')
-                    ->get();
+                $users = DB::table('students')->paginate(5);
                 return view('pages.index', ['users' => $users, 'value' => 0]);
+                // ->paginate(5)->append(['sort' => 'votes', 'test'=> 'ac'])->fragment('users')
                 // ->min('age')->max('price')
                 // ->avg('age')->sum()
                 // ->limit(5)->offset(4)
