@@ -15,9 +15,18 @@ class PageController extends Controller
             $user = DB::table('students')->find($id);
             return view('pages.index', ['user'=> $user, 'value' => 1]);
         } else {
-            // $users = DB::table('students')->whereDate('created_at', '2025-07-1')->get();
-            $users = DB::table('students')->whereBetween('id', [11,15])->get();
+            $users = DB::table('students')
+            ->get();
             return view('pages.index', ['users'=> $users, 'value' => 0] );
+            // ->min('age')->max('price')
+            // ->avg('age')->sum()
+            // ->limit(5)->offset(4)
+            // ->whereMonth('created_at', '9')
+            // ->orderBy('id','DESC')
+            // ->latest()
+            // ->oldest()
+            // ->whereDate('created_at', '2025-07-14')
+            // $users = DB::table('students')->whereBetween('id', [1,15])->get();
             // ->where('id', $id)
             // ->where([
             // ['city', '=', ''goa],
