@@ -3,6 +3,7 @@
 
 @section('content')
 <h1>This is index template page</h1>
+<h1>{{ session('success') }}</h1>
 <table width="100%">
     <tr>
         <td>
@@ -42,7 +43,7 @@
         <td><a style="width:160px !important;padding:10px 50px; background-color:rgb(0, 255, 0);border-radius:6px; color:black"
                 href="controller/{{ $user->id }}">Show</a></td>
                 <td><a style="width:160px !important;padding:10px 50px; background-color:blue;border-radius:6px; color:black"
-                href="updatecontroller/{{ $user->id }}">Update</a></td>
+                href="{{ route('edit_student', $user->id) }}">Edit Student</a></td>
                  <td><a style="width:160px !important;padding:10px 50px; background-color:red;border-radius:6px; color:black"
                 href="deletecontroller/{{ $user->id }}">Delete User</a></td>
     </tr>
@@ -66,7 +67,7 @@
         <td><a style="width:160px !important;padding:10px 50px; background-color:rgb(0, 255, 0);border-radius:6px; color:black"
                 href="{{ route('view_student') }}">Back</a></td>
                 <td><a style="width:160px !important;padding:10px 50px; background-color:blue;border-radius:6px; color:black"
-                href="updatecontroller/{{ $user->id }}">Update</a></td>
+                href="{{ route('edit_student', $user->id) }}">Edit Student</a></td>
                  <td><a style="width:160px !important;padding:10px 50px; background-color:red;border-radius:6px; color:black"
                 href="deletecontroller/{{ $user->id }}">Delete User</a></td>
     </tr>

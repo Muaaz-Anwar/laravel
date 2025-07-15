@@ -1,20 +1,16 @@
 @extends('template_components.layout')
 
-
 @section('content')
-    <div>
-        <h1>{{ session('success') }}</h1>
-    </div>
     <div style="margin: 150px 0px">
-        <form action="{{ route('add_home') }}" method="post">
+        <form action="{{ route('update_home', $user->id) }}" method="post">
             @csrf
             <label for="">Student Name</label>
-            <input type="text" name="name">
+            <input type="text" name="name" value="{{ $user->name }}">
             <br>
             <label for="">Student Email</label>
-            <input type="text" name="email">
+            <input type="text" name="email" value="{{ $user->email }}">
             <br>
-            <button type="submit">Add Student</button>
+            <button type="submit">Update Student</button>
         </form>
     </div>
 @endsection

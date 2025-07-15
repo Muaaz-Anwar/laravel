@@ -93,9 +93,9 @@ class PageController extends Controller
         // ]);
     }
 
-    public function update($id = null){
+    public function update(Request $request){
         $user = DB::table("students")
-        ->where("id", $id)
+        ->where("id", $request->id)
         //insert or update //
         // ->increment('age', 5)->decrement('price', 500, ['email', 'anyemail@gmail.com'])
         // ->incrementeach([
@@ -103,11 +103,11 @@ class PageController extends Controller
         // 'other_int_field' => 5,
         // ]);
         ->update([
-            "name"=> 'dayana.baumbach',
-            'email'=> "dayana.baumbach@hirthe.org",
+            "name"=> $request->name,
+            'email'=> $request->email,
         ]);
         if ($user) {
-            return redirect('controller');
+            return redirect()->route('view_student')->with('success','Data Added Successfully');
         }else{
             echo "<h1>Data Not</h1>";
         }
@@ -120,5 +120,9 @@ class PageController extends Controller
         }else{
             echo "<h1>Data Not Deleted</h1>";
         }
+    }
+    public function edit($id){
+        $user = DB::table("students")->where("id", $id)->get();
+        return view("pages.edit", ["user"=> $user[0]]);
     }
 }

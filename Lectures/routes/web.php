@@ -98,9 +98,10 @@ Route::fallback(function () {
 Route::controller(PageController::class)->group(function(){
     Route::get('controller/{id?}', 'show')->name('view_student');
     Route::post('addcontroller', 'add')->name('add_home');
-    Route::get('updatecontroller/{id?}', 'update')->name('update_home');
+    Route::post('updatecontroller/{id}', 'update')->name('update_home');
     Route::get('deletecontroller/{id}', 'delete')->name('delete_home');
     Route::get('indexcontroller', 'index')->name('add_student');
+    Route::get('editcontroller/{id}', 'edit')->name('edit_student');
 });
 
 
