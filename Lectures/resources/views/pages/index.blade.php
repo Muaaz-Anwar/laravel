@@ -23,6 +23,9 @@
         <td>
             <h3>Show More</h3>
         </td>
+        <td>
+            <h3>Update</h3>
+        </td>
     </tr>
     @if (!$value)
     @if ($users->count() >= 1)
@@ -35,6 +38,8 @@
         <td>{{ $user->updated_at }}</td>
         <td><a style="width:160px !important;padding:10px 50px; background-color:rgb(0, 255, 0);border-radius:6px; color:black"
                 href="controller/{{ $user->id }}">Show</a></td>
+                <td><a style="width:160px !important;padding:10px 50px; background-color:rgb(0, 255, 0);border-radius:6px; color:black"
+                href="updatecontroller/{{ $user->id }}">Update</a></td>
     </tr>
     @endforeach
     @else

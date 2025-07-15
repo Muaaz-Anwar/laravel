@@ -59,15 +59,12 @@ Route::get('/tabout', function () {
     return view('template.about');
 })->name('about');
 
-// Route::prefix('pages')->group(function () {
+Route::prefix('pages')->group(function () {
 
-//     Route::get('user1', function () {
-//         return view('pages.user_1');
-//     })->name('user_1');
-//     Route::get('user2', function () {
-//         return view('pages.user_2');
-//     })->name('user_2');
-// });
+    Route::get('index', function () {
+        return view('pages.index');
+    })->name('user_1');
+});
 
 
 Route::view('route', 'routes', ['name' => ['one' => 'this is when']]);
@@ -96,8 +93,9 @@ Route::fallback(function () {
 
 
 Route::controller(PageController::class)->group(function(){
-    // Route::get('controller', 'index')->name('p_home');
     Route::get('controller/{id?}', 'show')->name('p_home');
+    Route::get('addcontroller', 'add')->name('add_home');
+    Route::get('updatecontroller/{id?}', 'update')->name('update_home');
 });
 
 
