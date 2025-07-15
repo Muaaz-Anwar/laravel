@@ -91,6 +91,10 @@ class PageController extends Controller
         ->where("id", $id)
         //insert or update //
         // ->increment('age', 5)->decrement('price', 500, ['email', 'anyemail@gmail.com'])
+        // ->incrementeach([
+        // 'age' => 5,
+        // 'other_int_field' => 5,
+        // ]);
         ->update([
             "name"=> 'dayana.baumbach',
             'email'=> "dayana.baumbach@hirthe.org",
@@ -99,6 +103,15 @@ class PageController extends Controller
             return redirect('controller');
         }else{
             echo "<h1>Data Not</h1>";
+        }
+    }
+    public function delete($id){
+        $user = DB::table("students");
+        $user->where("id", $id)->delete();
+        if ($user) {
+            return redirect("controller");
+        }else{
+            echo "<h1>Data Not Deleted</h1>";
         }
     }
 }

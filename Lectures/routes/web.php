@@ -96,6 +96,7 @@ Route::controller(PageController::class)->group(function(){
     Route::get('controller/{id?}', 'show')->name('p_home');
     Route::get('addcontroller', 'add')->name('add_home');
     Route::get('updatecontroller/{id?}', 'update')->name('update_home');
+    Route::get('deletecontroller/{id}', 'delete')->name('delete_home');
 });
 
 
