@@ -62,10 +62,13 @@ Route::get('/tabout', function () {
 Route::prefix('pages')->group(function () {
 
     Route::get('index', function () {
-        return view('pages.index');
+        return view('welcome');
     })->name('user_1');
+    Route::get('index', function () {
+        return view('welcome');
+    })->name('user_2');
 });
-
+Route::view('/home','welcome')->name('user_1');
 
 Route::view('route', 'routes', ['name' => ['one' => 'this is when']]);
 // Route::redirect('about', 'blog');
@@ -93,10 +96,11 @@ Route::fallback(function () {
 
 
 Route::controller(PageController::class)->group(function(){
-    Route::get('controller/{id?}', 'show')->name('p_home');
-    Route::get('addcontroller', 'add')->name('add_home');
+    Route::get('controller/{id?}', 'show')->name('view_student');
+    Route::post('addcontroller', 'add')->name('add_home');
     Route::get('updatecontroller/{id?}', 'update')->name('update_home');
     Route::get('deletecontroller/{id}', 'delete')->name('delete_home');
+    Route::get('indexcontroller', 'index')->name('add_student');
 });
 
 

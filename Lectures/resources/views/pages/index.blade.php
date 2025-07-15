@@ -64,7 +64,7 @@
         <td>{{ $user->created_at }}</td>
         <td>{{ $user->updated_at }}</td>
         <td><a style="width:160px !important;padding:10px 50px; background-color:rgb(0, 255, 0);border-radius:6px; color:black"
-                href="{{ route('p_home') }}">Back</a></td>
+                href="{{ route('view_student') }}">Back</a></td>
                 <td><a style="width:160px !important;padding:10px 50px; background-color:blue;border-radius:6px; color:black"
                 href="updatecontroller/{{ $user->id }}">Update</a></td>
                  <td><a style="width:160px !important;padding:10px 50px; background-color:red;border-radius:6px; color:black"

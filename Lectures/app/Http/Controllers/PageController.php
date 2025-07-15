@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
     public function index()
     {
-        return view('pages.index');
+        return view('pages.add');
     }
 
     public function show($id = null)
@@ -51,7 +52,25 @@ class PageController extends Controller
         }
 
     }
-    public function add(){
+    public function add(Request $request){
+        //     $user = DB::table('students')->upsert([
+        //         'name'=> "Toweer ahmad",
+        //         'email'=> 'toqeer007@gmail.com',
+        //         'created_at' => Now(),
+        //         'updated_at' => Now(),
+        //     ],['email'],['name']
+        // );
+        $user = DB::table('students')->insert([
+            'name'=> $request->name,
+            'email'=> $request->email,
+            'created_at' => Now(),
+            'updated_at' => Now(),
+        ]);
+            if ($user) {
+                return redirect()->route('add_student')->with('success','Data Added');
+            }else {
+                echo "<h1>Data not added</h1>";
+            }
         // $user = DB::table('students')->insertOrIgnore([
         //     [
         //     'name'=> "ali asghar",
@@ -72,18 +91,6 @@ class PageController extends Controller
         //     'updated_at' => Now(),
         // ]
         // ]);
-        $user = DB::table('students')->upsert([
-            'name'=> "Toweer ahmad",
-            'email'=> 'toqeer007@gmail.com',
-            'created_at' => Now(),
-            'updated_at' => Now(),
-        ],['email'],['name']
-    );
-        if ($user) {
-            echo "<h1>Data Has been added successfully</h1>";
-        }else {
-            echo "<h1>Data not added</h1>";
-        }
     }
 
     public function update($id = null){
