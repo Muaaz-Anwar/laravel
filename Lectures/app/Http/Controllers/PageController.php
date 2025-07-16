@@ -15,15 +15,15 @@ class PageController extends Controller
     public function show($id = null)
     { {
             if ($id) {
-                $user = DB::table('students')
-                ->join('cities', 'students.city', '=', 'cities.id')->select('students.*', 'cities.name as city_name')
+                $user = DB::table('students')->join('cities', 'students.city', '=', 'cities.id')
                 ->select('students.*', 'cities.city_name as city_name')
+                ->where('students.id','=', $id)
                 ->first();
                 return view('pages.index', ['user' => $user, 'value' => 1]);
             } else {
-                $users = DB::table('students')
-                ->join('cities', 'students.city', '=', 'cities.id')
-                ->paginate(10);
+                $users = DB::table('students')->join('cities', 'students.city', '=', 'cities.id')
+                    ->select('students.*', 'cities.city_name as city_name')
+                    ->paginate(10);
                 return view('pages.index', ['users' => $users, 'value' => 0]);
                 // ->paginate(5)->append(['sort' => 'votes', 'test'=> 'ac'])->fragment('users')
                 // ->min('age')->max('price')
