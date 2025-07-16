@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\DB;
 class PageController extends Controller
 {
     public function index()
-    {
-        return view('pages.add');
+    {   $cities = DB::table("cities")->get();
+        // return $cities;
+        return view('pages.add', compact('cities'));
     }
 
     public function show($id = null)
@@ -22,7 +23,11 @@ class PageController extends Controller
                 return view('pages.index', ['user' => $user, 'value' => 1]);
             } else {
                 $users = DB::table('students')->join('cities', 'students.city', '=', 'cities.id')
-                    ->select('students.*', 'cities.city_name as city_name')
+                    ->select(['students.*', 'cities.city_name as city_name'])
+                    // ->where('city_name','=', 'South Veda')
+                    // ->select(DB::raw('count(*) as std'), 'city_name')
+                    // ->groupBy('city_name')
+                    // return $users;
                     ->paginate(10);
                 return view('pages.index', ['users' => $users, 'value' => 0]);
                 // ->paginate(5)->append(['sort' => 'votes', 'test'=> 'ac'])->fragment('users')
@@ -67,6 +72,7 @@ class PageController extends Controller
         $user = DB::table('students')->insert([
             'name' => $request->name,
             'email' => $request->email,
+            'city' => $request->city,
             'created_at' => Now(),
             'updated_at' => Now(),
         ]);
@@ -109,7 +115,8 @@ class PageController extends Controller
             // ]);
             ->update([
                 "name" => $request->name,
-                'email' => $request->email,
+                'city'=> $request->city,
+                'email' => $request->email
             ]);
         if ($user) {
             return redirect()->route('view_student')->with('success', 'Data Added Successfully');
@@ -129,7 +136,15 @@ class PageController extends Controller
     }
     public function edit($id)
     {
-        $user = DB::table("students")->where("id", $id)->get();
-        return view("pages.edit", ["user" => $user[0]]);
+        $user = DB::table("students")
+        ->join('cities', 'students.city', '=', 'cities.id')
+        ->select('students.*', 'cities.city_name as city_name')
+                ->where('students.id','=', $id)
+        ->first();
+        $city = DB::table('cities')
+        ->select('cities.*')
+        ->where('cities.id','!=', $user->city)
+        ->get();
+        return view("pages.edit", ["user" => $user,"cities"=> $city]);
     }
 }
