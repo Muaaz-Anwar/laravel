@@ -116,7 +116,8 @@ class PageController extends Controller
             ->update([
                 "name" => $request->name,
                 'city'=> $request->city,
-                'email' => $request->email
+                'email' => $request->email,
+                'updated_at' => Now(),
             ]);
         if ($user) {
             return redirect()->route('view_student')->with('success', 'Data Added Successfully');
