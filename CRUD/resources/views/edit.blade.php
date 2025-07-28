@@ -41,52 +41,24 @@
             </div>
         </div>
     </nav>
-
-    <div class="container">
-        @if (session('success'))
-            <div class="alert alert-warning" role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
-    </div>
     <div class="container mt-5">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Password</th>
-                    <th scope="col">Update</th>
-                    <th scope="col">Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($users as $user)
-                    <tr>
-                        <td>
-                            {{ $user->name }}
-                        </td>
-                        <td>
-                            {{ $user->email }}
-                        </td>
-                        <td>
-                            {{ $user->password }}
-                        </td>
-                        <td>
-                            <a href="{{ route('edit_user', $user->id) }}" class="btn btn-warning"> Edit User</a>
-                        </td>
-                        <td>
-                            <a href="{{ route('delete_user', $user->id) }}" class="btn btn-danger">Delete User</a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                {{ $users->links() }}
-            </ul>
-        </nav>
+        <form action="{{ route('update_user', $user->id) }}" method="post">
+            @csrf
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Full Name</label>
+                <input class="form-control" id="name" value="{{ $user->name }}" name="name" required aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" class="form-control" value="{{ $user->email }}" name="email" required id="exampleInputEmail1" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
     </div>
 </body>
 
