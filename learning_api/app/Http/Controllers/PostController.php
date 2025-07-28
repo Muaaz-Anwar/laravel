@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
+use PhpParser\JsonDecoder;
 
 class PostController extends Controller implements HasMiddleware
 {
@@ -76,6 +77,6 @@ class PostController extends Controller implements HasMiddleware
     {
         Gate::authorize('modify', $post);
         $post->delete();
-        return ['message' , 'Deleted'];
+        return ['message' , "deleted"];
     }
 }
