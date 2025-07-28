@@ -16,7 +16,7 @@ Route::controller(UserController::class)->group(function(){
 
 
 Route::controller(employeeController::class)->group(function(){
-    Route::get('/employee' ,'index')->name('employee');
+    Route::get('/employ' ,'index')->name('employ');
     Route::post('/add_employee' ,'create')->name('add_employee');
     Route::get('/view_employee','view')->name('view_employee');
     Route::get('edit_employee/{id}','edit')->name('edit_employee');

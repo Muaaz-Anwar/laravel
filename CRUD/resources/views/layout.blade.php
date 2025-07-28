@@ -43,12 +43,12 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="{{ route('employee') }}" role="button"
+                        <a class="nav-link dropdown-toggle" href="{{ route('employ') }}" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Employee
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('employee') }}">View Employee</a></li>
+                            <li><a class="dropdown-item" href="{{ route('employ') }}">View Employee</a></li>
                         </ul>
                     </li>
                 </ul>
