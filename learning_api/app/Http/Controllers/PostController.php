@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
-use PhpParser\JsonDecoder;
 
 class PostController extends Controller implements HasMiddleware
 {
     public static function middleware()
     {
         return [
-            new Middleware('auth:sanctum', except: ['index' ,'show']),
+            new Middleware('auth:sanctum', except: ['index', 'show']),
         ];
     }
     /**
@@ -34,10 +34,12 @@ class PostController extends Controller implements HasMiddleware
         $request->validate([
             'title' => 'required|min:3|max:15|unique:posts,title',
             'description' => 'required|min:8|max:255',
+            "image" => "image|mimes:jpg,png,jpeg|max:2048",
         ]);
         $add = $request->user()->posts()->create([
-            'title'=> $request->title,
-            'description'=> $request->description,
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $request->file('image')->store('post_images', 'public'),
             'created_at' => Now(),
             'updated_at' => Now(),
         ]);
@@ -59,15 +61,26 @@ class PostController extends Controller implements HasMiddleware
     {
         Gate::authorize('modify', $post);
         $request->validate([
-            'title' => 'required|min:3|max:15|unique:posts,title',
+            'title' => 'required|min:3|max:15',
             'description' => 'required|min:8|max:255',
+            "image" => "image|mimes:jpg,png,jpeg|max:2048",
         ]);
+        $previousimage = $post->image;
+        if ($request->hasFile('image')) {
+            if ($previousimage && Storage::disk('public')->exists($previousimage)) {
+                Storage::disk('public')->delete($previousimage);
+            }
+
+            // ✅ Store new file
+            $imagePath = $request->file('image')->store('post_images', 'public');
+        }
         $post->update([
-            'title'=> $request->title,
-            'description'=> $request->description,
+            'title' => $request->title,
+            'description' => $request->description,
+            "image" => $imagePath,
             'updated_at' => Now(),
         ]);
-        return $post;
+        return $previousimage;
     }
 
     /**
@@ -77,6 +90,6 @@ class PostController extends Controller implements HasMiddleware
     {
         Gate::authorize('modify', $post);
         $post->delete();
-        return ['message' , "deleted"];
+        return ['message', $post];
     }
 }
