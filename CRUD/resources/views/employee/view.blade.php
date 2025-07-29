@@ -46,11 +46,16 @@
                             <input type="password" class="form-control" id="password" name="password" required
                                 id="exampleInputPassword1">
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 w-25">
                             <label for="exampleInputPassword1" class="form-label">Profile</label>
+                            <img type="file" class="form-control" src="" id="showprofile" alt="No Image Found">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Image</label>
                             <input type="file" class="form-control" id="profile" name="profile" required
                                 id="exampleInputPassword1">
                         </div>
+
                         <button type="button" class="btn btn-primary" id="submit">Submit</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </form>
@@ -70,21 +75,42 @@
             $("#submit").click(function() {
                 var id = $("#id").val();
                 if (id) {
-                    let formData = {
-                        name: $("#id").val(),
-                        name: $("#name").val(),
-                        email: $("#email").val(),
-                        password: $("#password").val()
+                    // let formData = {
+                    //     name: $("#id").val(),
+                    //     name: $("#name").val(),
+                    //     email: $("#email").val(),
+                    //     password: $("#password").val()
+                    // }
+                    let formData = new FormData(); // ✅ Proper FormData object
+                    formData.append("id", id);
+                    formData.append("name", $("#name").val());
+                    formData.append("email", $("#email").val());
+                    formData.append("password", $("#password").val());
+                    formData.append("_method", "PUT");
+                    if ($('#profile')[0].files[0]) {
+                        formData.append("profile", $('#profile')[0].files[0]);
+                    };
+                    formData.append("_token", "{{ csrf_token() }}");
+                    for (let pair of formData.entries()) {
+                        console.log(pair[0] + ': ' + pair[1]);
                     }
                     $.ajax({
-                        type: "PUT",
                         url: "/update_employee/" + id,
+                        type: "POST",
                         data: formData,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                         success: function(res) {
                             console.log(res)
                             $("#id").val(null),
                                 $("#name").val(null),
                                 $("#email").val(null),
+                                $("#password").val(null),
+                                $("#showprofile").attr("src", null);
                                 $('#exampleModal').modal('hide');
                             loaddata();
                         },
@@ -94,12 +120,7 @@
                     })
 
                 } else {
-                    // let formData = {
-                    //     name: $("#name").val(),
-                    //     email: $("#email").val(),
-                    //     password: $("#password").val(),
-                    //     profile: $('#profile')[0].files[0],
-                    // }
+                    $('#showprofile').attr('src',null)
                     let formData = new FormData(); // ✅ Proper FormData object
 
                     formData.append("name", $("#name").val());
@@ -118,7 +139,12 @@
                         success: function(res) {
                             console.log(res)
                             $('#exampleModal').modal('hide');
-                            loaddata();
+                            $("#id").val(null),
+                                $("#name").val(null),
+                                $("#email").val(null),
+                                $("#password").val(null),
+                                $("#showprofile").attr("src", null);
+                                loaddata();
                         },
                         error: function(err) {
                             alert(err)
@@ -140,17 +166,24 @@
                     let employees = null;
                     employees = data.message;
                     $.each(employees, function(key, value) {
+                        if (value.profile) {
+                            var pic = value.profile
+                        } else {
+                            var pic = '/profile_images/profile.jpeg'
+                        }
                         $('#exampleid').append("<tr>\
-                                                                <td>" + value.name + "</td>\
-                                                                <td>" + value.email + "</td>\
-                                                                <td><img src='/storage/" + value.profile + "' width='160' /></td>\
-                                                                <td><button class='btn btn-warning updateBtn' data-id='" +
+                                                                                        <td>" + value.name + "</td>\
+                                                                                        <td>" + value.email + "</td>\
+                                                                                        <td><img src='/storage/" + pic +
+                            "' width='160' /></td>\
+                                                                                        <td><button class='btn btn-warning updateBtn' data-id='" +
                             value
-                            .id + "'>Edit Employee </button></td>\
-                                                                <td><button class='btn btn-danger deleteBtn' data-id='" +
+                            .id +
+                            "'>Edit Employee </button></td>\
+                                                                                        <td><button class='btn btn-danger deleteBtn' data-id='" +
                             value
                             .id + "'>Delete</button></td>\
-                                                            </tr>");
+                                                                                    </tr>");
                     });
                 },
                 error: function(err) {
@@ -191,13 +224,11 @@
                         id: id,
                     },
                     success: function(response) {
-                        console.log(response.message.profile)
                         $('#exampleModal').modal('show');
-                        $("#id").val(response.message.id)
-                        $("#name").val(response.message.name)
-                        $("#email").val(response.message.email)
-                        $("#profile").val(response.message.profile)
-                        // Remove the row from the table
+                        $("#id").val(response.message.id);
+                        $("#name").val(response.message.name);
+                        $("#email").val(response.message.email);
+                        $("#showprofile").attr("src", "/storage/" + response.message.profile);
                     },
                     error: function(xhr) {
                         alert("Error deleting employee.");
