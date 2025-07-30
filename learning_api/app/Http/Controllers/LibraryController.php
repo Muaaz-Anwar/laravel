@@ -2,26 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
-use App\Models\Contact;
 use App\Models\Library;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class LibraryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $students = Student::with('contact')->get();
-        return $students;
-    }
-
-    public function book()
-    {
-        $students = Student::has('book')->with('book')->get();
-        return $students;
+        //
     }
 
     /**
@@ -43,7 +34,7 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show(Library $library)
     {
         //
     }
@@ -51,7 +42,7 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit(Library $library)
     {
         //
     }
@@ -59,7 +50,7 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, Library $library)
     {
         //
     }
@@ -67,7 +58,7 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy(Library $library)
     {
         //
     }
